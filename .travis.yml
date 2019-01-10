@@ -1,0 +1,21 @@
+sudo: required
+language: go
+install: true
+services:
+- docker
+script:
+- scripts/build.sh ${TRAVIS_BRANCH} linux
+deploy:
+- provider: script
+  script: bash scripts/publish_docker.sh ${TRAVIS_BRANCH} true
+  on:
+    tags: true
+- provider: script
+  script: bash scripts/publish_docker.sh ${TRAVIS_BRANCH}
+  on:
+    all_branches: true
+    condition: "${TRAVIS_BRANCH} != master"
+env:
+  global:
+  - secure: QL37d+1OjB1APZ4YhPvZ6JDU97JFuVBpqA2lsUqrBClOP80TBcAbBnF0O8mL4yt5Ufa+y6yF50M4dVE6HKK7JN3DB0axRzvKA4yDdIbLlzq/00Wc2DC1WOlcnRvsEQxykEHEw/MCQP7WXDNLxkywWccR5Ks4MjKqZRSAd3JGfWaSD0zBrMYhyuRXsG63RvIlFv6XWYRTAD6wIXjgPnHPWOTA8S8ct3oo3w+xXWPyMW8VFsvojSGulzQxv8t9N1VCux9wS8PIdHO0UIB5FIvXZtTm6/mDS2X2j1mWUNtqYzDN9NbINAE4pUMYY5q8s4dLMEii3m2pB6p1cuw/3oHtnkeeyJPNeHNrYiydx0XShSJcj25w8ZBR9tRdRL+RP60bNeJk09Z6bnvlwxDos1goGKjS6uahctRLc5fwo2Q1fm9bKi8jKOylgQtXnC/Cl3eOmzISAFMin1kYDw3yt29OHvxdCYFHyVo53b1rQw21vGEArQK5EeQ+T0mWIB/uvCtmbYR3WSpJ2Olz3GiwOTRFdOjRTvQFoH6dftlu3eTepPBylsCMODa+v0I5CVZsyUGOCoTelm2nEa3FT9aIOWwWtgc+lykP9xoycRNtHtnCXOzpTTpWZiCjaBtHA5MYCAfLRiQud0zb3OqG7DyV7tSTuetwSIFWE6cRgQd4VTpuMV0=
+  - secure: CoohjN/D/ShpxaWHNVGS8GfN2LrCxHlBcJkscbN9jFxC98EHTyoCEN/Z3bGu6yZThET0qrYX/wAd1Nk02Ha9foh8Zvbz4xVBL1RchW2ttGo3eR0xABLdOi7QIBA2TepZlENnQkYPfEVTS0mvNhMO5aAeOYc0XRvKE9HxqsPbCJX3AxFy5DoUs7elt6A5hWWsWAB0ErBE1kulIIv3n3vgVf6LkyDxX0ABafEXnpe+EKYAIPYfiqQRudx0/PEKZULVLcPGsrisQ55fMBy5zbQRlcTKXbO8HGjTPVacugf/Dbh6j7R011GE7esv9WyL5bkppf6hvGZkZ3ab71KFcUiG9Ys2qSi6SivEMCN7/ygKcyIOS1/1jlp+6+ikMLO0N6KUtA7w8vYV0Y5hfaJy0MYE+XQBoWJfl1320oyPDunen6AVt4MkbJA6mG+tyiNYnme/DSjmfOIUmuaRvY2xH5wnVRnKWZ1yx6qZX8cW/kI2egVYYsUkjdStDbkRo9HgI+puk1i76Bm9hOdydKVO704Ryc30gZ8l+EMnX+0VN+gZ3lBnKD+d7i/op8LqpzjN30Qo7qBwaIOZymmgXdTKUFHoQ0cJ8/G7NHbm6MhDw7Xnc9jGnL6SsuokVUKv2h0i0NtoK9ySDxOGTCh52i8crWTcD4JM2lhQ3sGepfSgp68YLcM=
